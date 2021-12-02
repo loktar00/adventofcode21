@@ -1,3 +1,3 @@
 # adventofcode21
 
-`node day*.js`
+js/node
