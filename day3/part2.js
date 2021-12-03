@@ -31,6 +31,8 @@ function calculate(inputData) {
     uncommonBits[idx] = 1;
   });
 
+  console.log(uncommonBits)
+
   const power = parseInt(commonBits.join(''), 2) * parseInt(uncommonBits.join(''), 2);
   console.log(power);
 
