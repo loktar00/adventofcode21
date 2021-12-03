@@ -20,7 +20,6 @@ function calculate(inputData) {
   const uncommonBits = [];
 
   positionTotals.forEach((el, idx) => {
-      console.log(el)
     if (el > inputData.length / 2) {
         commonBits[idx] = 1;
         uncommonBits[idx] = 0;

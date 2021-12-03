@@ -2,43 +2,40 @@
 
 const fs = require('fs')
 
+function getCommon(data, idx) {
+    data.sort();
+    const common = data[~~(data.length / 2)][idx];
+
+    return data.filter(el => el[idx] === common);
+}
+
+function getUncommon(data, idx) {
+    data.sort();
+
+    const unCommon = Math.abs(data[~~(data.length / 2)][idx] - 1);
+    return data.filter(el => Number(el[idx]) === unCommon);
+}
+
 function calculate(inputData) {
-  const positionTotals = new Array(inputData[0].length).fill(0);
+    let counter = 0;
+    let commonResults = inputData;
+    let uncommonResults = inputData;
 
-  inputData.forEach(el => {
-    const positionValues = el.split('');
-
-    positionValues.forEach((val, idx) => {
-      if (Number(val) === 1) {
-        positionTotals[idx] ++;
-        return;
-      }
-    });
-  });
-
-  const commonBits = [];
-  const uncommonBits = [];
-
-  positionTotals.forEach((el, idx) => {
-      console.log(el)
-    if (el > inputData.length / 2) {
-        commonBits[idx] = 1;
-        uncommonBits[idx] = 0;
-        return;
+    while (counter < inputData[0].length) {
+        commonResults = [...getCommon(commonResults, counter)];
+        counter++;
     }
 
-    commonBits[idx] = 0;
-    uncommonBits[idx] = 1;
-  });
+    counter = 0;
+    while (counter < inputData[0].length && uncommonResults.length > 1) {
+        uncommonResults = [...getUncommon(uncommonResults, counter)];
+        counter++;
+    }
 
-  console.log(uncommonBits)
-
-  const power = parseInt(commonBits.join(''), 2) * parseInt(uncommonBits.join(''), 2);
-  console.log(power);
-
+    console.log(parseInt(commonResults, 2) * parseInt(uncommonResults, 2));
 };
 
-fs.readFile('dataTest.txt', 'utf8' , (err, data) => {
+fs.readFile('data.txt', 'utf8' , (err, data) => {
   if (err) {
     console.error(err);
     return;
@@ -46,7 +43,3 @@ fs.readFile('dataTest.txt', 'utf8' , (err, data) => {
 
   calculate([...data.replace(/[\r]/g, '').split('\n')]);
 });
-
-
-
-
